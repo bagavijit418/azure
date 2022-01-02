@@ -503,18 +503,18 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "fbd6264c-5a6b-4771-aeed-d0dd9cd339e9"
+						"spark.autotune.trackingId": "550e39aa-2a4d-427e-b960-2b34a5149f40"
 					}
 				},
 				"metadata": {
 					"saveOutput": true,
 					"enableDebugMode": false,
 					"kernelspec": {
-						"name": "synapse_pyspark",
-						"display_name": "Synapse PySpark"
+						"name": "synapse_spark",
+						"display_name": "Synapse Spark"
 					},
 					"language_info": {
-						"name": "python"
+						"name": "scala"
 					},
 					"a365ComputeOptions": {
 						"id": "/subscriptions/9c39901f-b06a-4ae9-ac0b-9c816cb3b9ef/resourceGroups/Data_Engineer/providers/Microsoft.Synapse/workspaces/avijitsynapse/bigDataPools/avijitspark",
@@ -580,6 +580,51 @@
 						],
 						"outputs": [],
 						"execution_count": 4
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"// Lab - Spark Pool - JSON files\r\n",
+							"\r\n",
+							"%%spark\r\n",
+							"\r\n",
+							"val df = spark.read.format(\"json\").load(\"abfss://data@bagavijit418dl.dfs.core.windows.net/raw/customer/customer_arr.json\")\r\n",
+							"display(df)\r\n",
+							"\r\n",
+							"// Now we need to expand the courses information\r\n",
+							"\r\n",
+							"%%spark\r\n",
+							"import org.apache.spark.sql.functions._\r\n",
+							"val df = spark.read.format(\"json\").load(\"abfss://data@bagavijit418dl.dfs.core.windows.net/raw/customer/customer_arr.json\")\r\n",
+							"val newdf=df.select(col(\"customerid\"),col(\"customername\"),col(\"registered\"),explode(col(\"courses\")))\r\n",
+							"display(newdf)\r\n",
+							"\r\n",
+							"// Reading the customer object file\r\n",
+							"%%spark\r\n",
+							"import org.apache.spark.sql.functions._\r\n",
+							"val df = spark.read.format(\"json\").load(\"abfss://data@bagavijit418dl.dfs.core.windows.net/raw/customer/customer_obj.json\")\r\n",
+							"val newdf=df.select(col(\"customerid\"),col(\"customername\"),col(\"registered\"),explode(col(\"courses\")),col(\"details.city\"),col(\"details.mobile\"))\r\n",
+							"display(newdf)\r\n",
+							"\r\n",
+							"\r\n",
+							"\r\n",
+							"\r\n",
+							"\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 2
 					}
 				]
 			},
