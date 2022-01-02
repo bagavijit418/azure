@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "avijitsynapse"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"avijitsynapse-WorkspaceDefaultSqlServer_connectionString": {
+			"value": ""
+		},
+		"bagavijit418dlds_accountKey": {
+			"value": ""
+		},
+		"avijitsynapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://bagavijitsynpsedl.dfs.core.windows.net"
+		},
+		"bagavijit418dlds_properties_typeProperties_url": {
+			"value": "https://bagavijit418dl.dfs.core.windows.net"
+		}
+	}
+}
